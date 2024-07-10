@@ -16,3 +16,4 @@ public class BaseResponse<T>{
     public T data;
 
 }
+
