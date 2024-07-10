@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.airline</groupId>
-	<artifactId>service</artifactId>
+	<artifactId>Airline_Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>service</name>
+	<name>Airline_Service</name>
 	<description>This is a project for airline service</description>
 	<url/>
 	<licenses>
