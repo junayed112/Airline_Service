@@ -19,5 +19,5 @@ public class FoodRequestBody {
 
     private Long quantity;
 
-    private LocalDateTime purchaseDate;
+//    private LocalDateTime purchaseDate;
 }
