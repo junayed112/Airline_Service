@@ -20,7 +20,7 @@ jobs:
         java-version: '17'
 
     - name: Build with Maven
-      run: mvn clean package -DskipTests
+      run: mvn -B package --file service/pom.xml -DskipTests
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -35,3 +35,4 @@ jobs:
       run: |
         docker-compose down
         docker-compose up -d
+        
