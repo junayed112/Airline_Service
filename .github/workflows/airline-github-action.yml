@@ -37,7 +37,16 @@ jobs:
         docker-compose -f Airline_Service/docker-compose.yml up -d
 
     - name: Wait for services to be up
-      run: sleep 30  # Adjust the sleep duration as necessary to ensure the services are up
+      run: |
+        for i in {1..30}; do
+          response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://localhost:8080/actuator/health)
+          if [ "$response" -eq 200 ]; then
+            echo "Service is up!"
+            break
+          fi
+          echo "Waiting for service to be up... ($i)"
+          sleep 10
+        done
 
     - name: Create a source location
       run: |
