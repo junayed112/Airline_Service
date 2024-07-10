@@ -20,7 +20,7 @@ jobs:
         java-version: '17'
 
     - name: Build with Maven
-      run: mvn -B package --file service/pom.xml -DskipTests
+      run: mvn -B package --file Airline_Service/service/pom.xml -DskipTests
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -39,19 +39,9 @@ jobs:
     - name: Wait for services to be up
       run: sleep 30  # Adjust the sleep duration as necessary to ensure the services are up
 
-    - name: Create an api for source location creation
+    - name: Create a source location
       run: |
-        curl --location 'localhost:8080/api/v1/location/create' \
-        --header 'Content-Type: application/json' \
-        --data '{
-        "airportName": "Hazrat Shahjalal AirPort",
-        "city": "Dhaka",
-        "country": "Bangladesh"
-      }'
-        
-    - name: Create an api for destination location creation
-      run: |
-        curl --location 'localhost:8080/api/v1/location/create' \
+        curl --location 'http://localhost:8080/api/v1/location/create' \
         --header 'Content-Type: application/json' \
         --data '{
         "airportName": "Hazrat Shahjalal AirPort",
@@ -59,18 +49,28 @@ jobs:
         "country": "Bangladesh"
       }'
 
-    - name: Create an api for route creation
+    - name: Create a destination location
       run: |
-        curl --location 'localhost:8080/api/v1/route/create' \
+        curl --location 'http://localhost:8080/api/v1/location/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "airportName": "John F. Kennedy International Airport",
+        "city": "New York",
+        "country": "USA"
+      }'
+
+    - name: Create a route
+      run: |
+        curl --location 'http://localhost:8080/api/v1/route/create' \
         --header 'Content-Type: application/json' \
         --data '{
         "sourceId": 1,
         "destinationId": 2
       }'
 
-    - name: Create an api for flight creation
+    - name: Create a flight
       run: |
-        curl --location 'localhost:8080/api/v1/flight/create' \
+        curl --location 'http://localhost:8080/api/v1/flight/create' \
         --header 'Content-Type: application/json' \
         --data '{
         "flightCategoryCode": 2,
@@ -79,18 +79,16 @@ jobs:
         "arrivalTime": "2024-07-11T18:30:00"
       }'
 
-    - name: Create an api for ticket creation
+    - name: Create tickets
       run: |
-        curl --location 'localhost:8080/api/v1/ticket/create' \
+        curl --location 'http://localhost:8080/api/v1/ticket/create' \
         --header 'Content-Type: application/json' \
         --data '{
         "flightId": 1,
         "seatNumber": "A1",
         "unitPrice": 3000
         }'
-    - name: Create an api for ticket creation
-      run: |
-        curl --location 'localhost:8080/api/v1/ticket/create' \
+        curl --location 'http://localhost:8080/api/v1/ticket/create' \
         --header 'Content-Type: application/json' \
         --data '{
         "flightId": 1,
@@ -98,9 +96,9 @@ jobs:
         "unitPrice": 3000
         }'
 
-    - name: Create an api for ticket booking
+    - name: Book tickets
       run: |
-        curl --location 'localhost:8080/api/v1/ticket/book' \
+        curl --location 'http://localhost:8080/api/v1/ticket/book' \
         --header 'Content-Type: application/json' \
         --data '{
         "ticketIds": [1,2],
@@ -109,9 +107,9 @@ jobs:
         "orderQuantity": 2
         }'
 
-    - name: Create an api for foodItem creation
+    - name: Create a food item
       run: |
-        curl --location 'localhost:8080/api/v1/food/create' \
+        curl --location 'http://localhost:8080/api/v1/food/create' \
         --header 'Content-Type: application/json' \
         --data '{
         "name": "Burger",
@@ -119,25 +117,23 @@ jobs:
         "quantity": 50
         }'
 
-    - name: Create an api for foodItem order
+    - name: Order food
       run: |
-        curl --location 'localhost:8080/api/v1/food/order' \
+        curl --location 'http://localhost:8080/api/v1/food/order' \
         --header 'Content-Type: application/json' \
         --data '{
         "foodItemId": 1,
         "quantity": 5
         }'
-    - name: Create an API to return the total sale amount from tickets and foods of the current day
-      run: |
-        curl --location 'localhost:8080/api/v1/sales/total-sales-today'
 
-    - name: Create an API to return the top 3 selling routes of all time (based on total sale amount from the tickets).
+    - name: Get today's total sales
       run: |
-        curl --location 'localhost:8080/api/v1/sales/top-selling-routes'
+        curl --location 'http://localhost:8080/api/v1/sales/total-sales-today'
 
-    - name: Create an API to return the max sale day of all tickets of a certain time range.
+    - name: Get top 3 selling routes
       run: |
-        curl --location 'localhost:8080/api/v1/sales/max-sale-day?startDate=2024-07-08&endDate=2024-07-11'
-        
+        curl --location 'http://localhost:8080/api/v1/sales/top-selling-routes'
 
-      
+    - name: Get max sale day within a time range
+      run: |
+        curl --location 'http://localhost:8080/api/v1/sales/max-sale-day?startDate=2024-07-08&endDate=2024-07-11'
