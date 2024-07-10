@@ -5,7 +5,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
-WORKDIR /app
-COPY --from=build /app/target/*.jar service-0.0.1-SNAPSHOT.jar
+WORKDIR /Airline_Service
+COPY --from=build /target/*.jar service-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "service-0.0.1-SNAPSHOT.jar"]
