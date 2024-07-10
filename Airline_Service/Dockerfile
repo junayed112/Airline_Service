@@ -4,7 +4,7 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-jre-slim
+FROM openjdk:17-jdk-slim
 WORKDIR /service/Airline_Service
 COPY --from=build /service/Airline_Service/target/*.jar service-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
