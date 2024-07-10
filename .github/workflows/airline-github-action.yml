@@ -36,4 +36,108 @@ jobs:
         docker-compose -f Airline_Service/docker-compose.yml down
         docker-compose -f Airline_Service/docker-compose.yml up -d
 
+    - name: Wait for services to be up
+      run: sleep 30  # Adjust the sleep duration as necessary to ensure the services are up
+
+    - name: Create an api for source location creation
+      run: |
+        curl --location 'localhost:8080/api/v1/location/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "airportName": "Hazrat Shahjalal AirPort",
+        "city": "Dhaka",
+        "country": "Bangladesh"
+      }'
         
+    - name: Create an api for destination location creation
+      run: |
+        curl --location 'localhost:8080/api/v1/location/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "airportName": "Hazrat Shahjalal AirPort",
+        "city": "Dhaka",
+        "country": "Bangladesh"
+      }'
+
+    - name: Create an api for route creation
+      run: |
+        curl --location 'localhost:8080/api/v1/route/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "sourceId": 1,
+        "destinationId": 2
+      }'
+
+    - name: Create an api for flight creation
+      run: |
+        curl --location 'localhost:8080/api/v1/flight/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "flightCategoryCode": 2,
+        "routeId": 1,
+        "departureTime": "2024-07-11T15:30:00",
+        "arrivalTime": "2024-07-11T18:30:00"
+      }'
+
+    - name: Create an api for ticket creation
+      run: |
+        curl --location 'localhost:8080/api/v1/ticket/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "flightId": 1,
+        "seatNumber": "A1",
+        "unitPrice": 3000
+        }'
+    - name: Create an api for ticket creation
+      run: |
+        curl --location 'localhost:8080/api/v1/ticket/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "flightId": 1,
+        "seatNumber": "A2",
+        "unitPrice": 3000
+        }'
+
+    - name: Create an api for ticket booking
+      run: |
+        curl --location 'localhost:8080/api/v1/ticket/book' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "ticketIds": [1,2],
+        "flightNumber": "9058921b",
+        "customerId": 1,
+        "orderQuantity": 2
+        }'
+
+    - name: Create an api for foodItem creation
+      run: |
+        curl --location 'localhost:8080/api/v1/food/create' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "name": "Burger",
+        "unitPrice": 300,
+        "quantity": 50
+        }'
+
+    - name: Create an api for foodItem order
+      run: |
+        curl --location 'localhost:8080/api/v1/food/order' \
+        --header 'Content-Type: application/json' \
+        --data '{
+        "foodItemId": 1,
+        "quantity": 5
+        }'
+    - name: Create an API to return the total sale amount from tickets and foods of the current day
+      run: |
+        curl --location 'localhost:8080/api/v1/sales/total-sales-today'
+
+    - name: Create an API to return the top 3 selling routes of all time (based on total sale amount from the tickets).
+      run: |
+        curl --location 'localhost:8080/api/v1/sales/top-selling-routes'
+
+    - name: Create an API to return the max sale day of all tickets of a certain time range.
+      run: |
+        curl --location 'localhost:8080/api/v1/sales/max-sale-day?startDate=2024-07-08&endDate=2024-07-11'
+        
+
+      
