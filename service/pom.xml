@@ -11,7 +11,7 @@
 	<groupId>com.airline</groupId>
 	<artifactId>service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>service</name>
 	<description>This is a project for airline service</description>
 	<url/>
