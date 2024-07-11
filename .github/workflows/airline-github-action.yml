@@ -38,7 +38,7 @@ jobs:
 
     - name: Create a source location
       run: |
-        curl --location 'http://localhost:8080/api/v1/location/create' \
+        curl --location 'http://spring_app:8080/api/v1/location/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "airportName": "Hazrat Shahjalal AirPort",
@@ -57,7 +57,7 @@ jobs:
         
     - name: Create a destination location
       run: |
-        curl --location 'http://localhost:8080/api/v1/location/create' \
+        curl --location 'http://spring_app:8080/api/v1/location/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "airportName": "John F. Kennedy International Airport",
