@@ -16,10 +16,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT COALESCE(SUM(t.unitPrice), 0) FROM Ticket t WHERE t.purchaseDate BETWEEN :startDate AND :endDate AND t.isBooked = true")
     BigDecimal getTotalTicketSalesForDate(Date startDate, Date endDate);
 
-    @Query("SELECT t.purchaseDate, SUM(t.unitPrice) as totalSales " +
+    @Query("SELECT FUNCTION('DATE', t.purchaseDate) AS purchaseDate, SUM(t.unitPrice) AS totalSales " +
             "FROM Ticket t " +
-            "WHERE t.purchaseDate BETWEEN :startDate AND :endDate AND t.isBooked = true " +
-            "GROUP BY t.purchaseDate " +
+            "WHERE FUNCTION('DATE', t.purchaseDate) BETWEEN :startDate AND :endDate AND t.isBooked = true " +
+            "GROUP BY FUNCTION('DATE', t.purchaseDate) " +
             "ORDER BY totalSales DESC")
     List<Object[]> getMaxSaleDayInRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
