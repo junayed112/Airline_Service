@@ -38,7 +38,7 @@ jobs:
 
     - name: Create a source location
       run: |
-        curl --location 'http://spring_app:8080/api/v1/location/create' \
+        curl --location 'http://app:8080/api/v1/location/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "airportName": "Hazrat Shahjalal AirPort",
@@ -57,7 +57,7 @@ jobs:
         
     - name: Create a destination location
       run: |
-        curl --location 'http://spring_app:8080/api/v1/location/create' \
+        curl --location 'http://app:8080/api/v1/location/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "airportName": "John F. Kennedy International Airport",
@@ -67,7 +67,7 @@ jobs:
 
     - name: Create a route
       run: |
-        curl --location 'http://localhost:8080/api/v1/route/create' \
+        curl --location 'http://app:8080/api/v1/route/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "sourceId": 1,
@@ -76,7 +76,7 @@ jobs:
 
     - name: Create a flight
       run: |
-        curl --location 'http://localhost:8080/api/v1/flight/create' \
+        curl --location 'http://app:8080/api/v1/flight/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "flightCategoryCode": 2,
@@ -87,14 +87,14 @@ jobs:
 
     - name: Create tickets
       run: |
-        curl --location 'http://localhost:8080/api/v1/ticket/create' \
+        curl --location 'http://app:8080/api/v1/ticket/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "flightId": 1,
           "seatNumber": "A1",
           "unitPrice": 3000
         }'
-        curl --location 'http://localhost:8080/api/v1/ticket/create' \
+        curl --location 'http://app:8080/api/v1/ticket/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "flightId": 1,
@@ -104,7 +104,7 @@ jobs:
 
     - name: Book tickets
       run: |
-        curl --location 'http://localhost:8080/api/v1/ticket/book' \
+        curl --location 'http://app:8080/api/v1/ticket/book' \
         --header 'Content-Type: application/json' \
         --data '{
           "ticketIds": [1,2],
@@ -115,7 +115,7 @@ jobs:
 
     - name: Create a food item
       run: |
-        curl --location 'http://localhost:8080/api/v1/food/create' \
+        curl --location 'http://app:8080/api/v1/food/create' \
         --header 'Content-Type: application/json' \
         --data '{
           "name": "Burger",
@@ -125,7 +125,7 @@ jobs:
 
     - name: Order food
       run: |
-        curl --location 'http://localhost:8080/api/v1/food/order' \
+        curl --location 'http://app:8080/api/v1/food/order' \
         --header 'Content-Type: application/json' \
         --data '{
           "foodItemId": 1,
@@ -134,12 +134,12 @@ jobs:
 
     - name: Get today's total sales
       run: |
-        curl --location 'http://localhost:8080/api/v1/sales/total-sales-today'
+        curl --location 'http://app:8080/api/v1/sales/total-sales-today'
 
     - name: Get top 3 selling routes
       run: |
-        curl --location 'http://localhost:8080/api/v1/sales/top-selling-routes'
+        curl --location 'http://app:8080/api/v1/sales/top-selling-routes'
 
     - name: Get max sale day within a time range
       run: |
-        curl --location 'http://localhost:8080/api/v1/sales/max-sale-day?startDate=2024-07-08&endDate=2024-07-11'
+        curl --location 'http://app:8080/api/v1/sales/max-sale-day?startDate=2024-07-08&endDate=2024-07-11'
